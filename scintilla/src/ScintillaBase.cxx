@@ -178,6 +178,11 @@ int ScintillaBase::KeyCommand(Message iMessage) {
 			AutoCompleteCompleted(0, CompletionMethods::Newline);
 			return 0;
 
+		// The RIGHT arrow key functions the same way as the ENTER key (NewLine) in the autocompletion box:
+		case Message::CharRight:
+			AutoCompleteCompleted(0, CompletionMethods::Newline);
+			return 0;
+			
 		default:
 			AutoCompleteCancel();
 		}
