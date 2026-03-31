@@ -6,17 +6,20 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Build Notepad++ Win32
+      - name: Build full solution
         run: |
-          msbuild PowerEditor\visual.net\notepadPlus.vcxproj ^
+          msbuild PowerEditor\visual.net\notepadPlus.sln ^
+            /t:Build ^
             /p:Configuration=Release ^
             /p:Platform=Win32
 
@@ -24,6 +27,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: notepadpp-x86
-          path: |
-            PowerEditor\bin\*
-            
+          path: PowerEditor\bin\*
+          
