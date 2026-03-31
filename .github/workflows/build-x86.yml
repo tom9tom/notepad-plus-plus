@@ -16,11 +16,11 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Build full solution
+      - name: Build Notepad++ Win32 FULL Solution
         run: |
-          msbuild PowerEditor\visual.net\notepadPlus.sln ^
-            /t:Build ^
-            /p:Configuration=Release ^
+          msbuild PowerEditor\visual.net\notepadPlus.sln `
+            /t:Build `
+            /p:Configuration=Release `
             /p:Platform=Win32
 
       - name: Upload artifact
