@@ -41,11 +41,11 @@ jobs:
           xcopy PowerEditor\installer\APIs $pkgDir\autoCompletion\ /E /I
 
           # Copy individual files
-          xcopy PowerEditor\installer\xml4Config\disableNppAutoUpdate.xml $pkgDir\disableNppAutoUpdate.xml
-          xcopy PowerEditor\installer\xml4Config\doLocalConf.xml $pkgDir\doLocalConf.xml
-          xcopy LICENSE $pkgDir\license.txt
-          xcopy PowerEditor\src\tabContextMenu_example.xml $pkgDir\tabContextMenu_example.xml
-          xcopy PowerEditor\src\toolbarButtonsConf_example.xml $pkgDir\toolbarButtonsConf_example.xml
+          xcopy PowerEditor\installer\xml4Config\disableNppAutoUpdate.xml $pkgDir\disableNppAutoUpdate.xml /Y
+          xcopy PowerEditor\installer\xml4Config\doLocalConf.xml $pkgDir\doLocalConf.xml /Y
+          xcopy LICENSE $pkgDir\license.txt /Y
+          xcopy PowerEditor\src\tabContextMenu_example.xml $pkgDir\tabContextMenu_example.xml /Y
+          xcopy PowerEditor\src\toolbarButtonsConf_example.xml $pkgDir\toolbarButtonsConf_example.xml /Y
           
           # Create ZIP
           Compress-Archive -Path $pkgDir\* -DestinationPath notepadpp-custom-$arch.zip
