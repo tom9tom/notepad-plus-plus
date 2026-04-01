@@ -87,8 +87,9 @@ jobs:
             Changes made to:
             - AutoComplete.cxx
             - ScintillaBase.cxx
-          files: |
-            ./artifacts/x86/notepadpp-custom-x86.zip
-            ./artifacts/x64/notepadpp-custom-x64.zip
           draft: false
           prerelease: false
+          artifacts: |
+            ./artifacts/x86/notepadpp-custom-x86.zip
+            ./artifacts/x64/notepadpp-custom-x64.zip
+          
