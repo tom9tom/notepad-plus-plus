@@ -175,10 +175,14 @@ int ScintillaBase::KeyCommand(Message iMessage) {
 						return 0;
 				}
 		case Message::VCHome:
-			AutoCompleteMove(-5000);
+			// AutoCompleteMove(-5000);
+			// move to the first element:
+			ac.lb->Select(0);
 			return 0;
 		case Message::LineEnd:
-			AutoCompleteMove(5000);
+			// AutoCompleteMove(5000);
+			// move to the last element:
+			ac.lb->Select(lbcount - 1);
 			return 0;
 		case Message::DeleteBack:
 			DelCharBack(true);
