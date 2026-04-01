@@ -1,0 +1,82 @@
+name: Build & Release Notepad++ x86 & x64 (Windows-only)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [Win32, x64]
+      fail-fast: false
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build solution
+        run: msbuild PowerEditor\visual.net\notepadPlus.sln /t:Build /p:Configuration=Release /p:Platform=${{ matrix.platform }}
+
+      - name: Prepare package
+        run: |
+          $arch = if ("${{ matrix.platform }}" -eq "Win32") { "x86" } else { "x64" }
+          $pkgDir = "package-$arch"
+          mkdir $pkgDir
+
+          REM Copy binaries
+          xcopy PowerEditor\bin\* $pkgDir\ /E /I
+
+          REM Copy runtime files
+          xcopy PowerEditor\themes $pkgDir\themes\ /E /I
+          xcopy PowerEditor\localization $pkgDir\localization\ /E /I
+          xcopy PowerEditor\functionList $pkgDir\functionList\ /E /I
+          xcopy PowerEditor\autoCompletion $pkgDir\autoCompletion\ /E /I
+
+          REM Create ZIP
+          Compress-Archive -Path $pkgDir\* -DestinationPath notepadpp-custom-$arch.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: notepadpp-${{ matrix.platform }}
+          path: notepadpp-custom-${{ matrix.platform == 'Win32' && 'x86' || 'x64' }}.zip
+
+  release:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Download x86 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: notepadpp-Win32
+          path: ./artifacts/x86
+
+      - name: Download x64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: notepadpp-x64
+          path: ./artifacts/x64
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v1.0-custom
+          name: My Custom Notepad++ Build
+          body: |
+            Custom Notepad++ build including all runtime files.
+            Changes made:
+            - AutoComplete.cxx
+            - ScintillaBase.cxx
+          files: |
+            ./artifacts/x86/notepadpp-custom-x86.zip
+            ./artifacts/x64/notepadpp-custom-x64.zip
+          draft: false
+          prerelease: false
