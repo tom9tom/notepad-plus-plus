@@ -32,7 +32,7 @@ jobs:
           mkdir $pkgDir
 
           # Copy binaries
-          xcopy PowerEditor\bin\* $pkgDir\ /E /I
+          xcopy PowerEditor\bin64\* $pkgDir\ /E /I
 
           # Copy runtime files
           xcopy PowerEditor\installer\themes $pkgDir\themes\ /E /I
