@@ -35,10 +35,10 @@ jobs:
           xcopy PowerEditor\bin\* $pkgDir\ /E /I
 
           # Copy runtime files
-          xcopy PowerEditor\themes $pkgDir\themes\ /E /I
-          xcopy PowerEditor\localization $pkgDir\localization\ /E /I
-          xcopy PowerEditor\functionList $pkgDir\functionList\ /E /I
-          xcopy PowerEditor\autoCompletion $pkgDir\autoCompletion\ /E /I
+          xcopy PowerEditor\installer\themes $pkgDir\themes\ /E /I
+          xcopy PowerEditor\installer\nativeLang $pkgDir\localization\ /E /I
+          xcopy PowerEditor\installer\functionList $pkgDir\functionList\ /E /I
+          xcopy PowerEditor\installer\APIs $pkgDir\autoCompletion\ /E /I
 
           # Create ZIP
           Compress-Archive -Path $pkgDir\* -DestinationPath notepadpp-custom-$arch.zip
