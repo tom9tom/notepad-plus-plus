@@ -72,6 +72,13 @@ jobs:
           name: notepadpp-x64
           path: ./artifacts/x64
 
+      - name: Prepare x64 package (copy missing files)
+        run: |
+          # Manually copy the missing files for x64
+          Copy-Item PowerEditor\bin64\Notepad++.exe -Destination ./artifacts/x64/notepad++.exe -Force
+          Copy-Item PowerEditor\bin64\langs.model.xml -Destination ./artifacts/x64/langs.model.xml -Force
+          Copy-Item PowerEditor\bin64\stylers.model.xml -Destination ./artifacts/x64/stylers.model.xml -Force
+
       - name: Create GitHub Release and upload binary
         uses: ncipollo/release-action@v1
         with:
