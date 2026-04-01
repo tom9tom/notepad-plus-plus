@@ -31,16 +31,16 @@ jobs:
           $pkgDir = "package-$arch"
           mkdir $pkgDir
 
-          REM Copy binaries
+          # Copy binaries
           xcopy PowerEditor\bin\* $pkgDir\ /E /I
 
-          REM Copy runtime files
+          # Copy runtime files
           xcopy PowerEditor\themes $pkgDir\themes\ /E /I
           xcopy PowerEditor\localization $pkgDir\localization\ /E /I
           xcopy PowerEditor\functionList $pkgDir\functionList\ /E /I
           xcopy PowerEditor\autoCompletion $pkgDir\autoCompletion\ /E /I
 
-          REM Create ZIP
+          # Create ZIP
           Compress-Archive -Path $pkgDir\* -DestinationPath notepadpp-custom-$arch.zip
 
       - name: Upload artifact
