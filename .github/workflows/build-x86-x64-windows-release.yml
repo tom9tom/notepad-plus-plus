@@ -75,11 +75,16 @@ jobs:
       - name: Create GitHub Release and upload binary
         uses: ncipollo/release-action@v1
         with:
-          tag: v1.0-custom
+          tag: v8.9.3-customized
           name: My Custom Notepad++ Build
           body: |
             Custom Notepad++ build including all runtime files.
-            Changes made:
+            The only difference from the original Notepad++ is that the autocompletion listbox wraps around,
+            i.e. the selection in the listbox can cycle (pressing UP on the first element jumps to the last
+            one and similarly, pressing DOWN on the last element jumps to the first one).
+            Plus, the RIGHT arrow key can also be used as the completion key.
+            This way it's much easier and faster to select items from the autocompletion listbox.
+            Changes made to:
             - AutoComplete.cxx
             - ScintillaBase.cxx
           files: |
